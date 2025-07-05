@@ -186,25 +186,25 @@ export default function UserManagement() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div className="bg-emerald-500/10 p-3 rounded-lg">
               <div className="text-emerald-400 font-semibold">Total Users</div>
-              <div className="text-white text-2xl font-bold">{users.length}</div>
+              <div className="text-gray-900 text-2xl font-bold">{users.length}</div>
             </div>
             <div className="bg-teal-500/10 p-3 rounded-lg">
               <div className="text-teal-400 font-semibold">Active Users</div>
-              <div className="text-white text-2xl font-bold">
+              <div className="text-gray-900 text-2xl font-bold">
                 {users.filter(u => u.status === 'active').length}
               </div>
             </div>
             <div className="bg-cyan-500/10 p-3 rounded-lg">
               <div className="text-cyan-400 font-semibold">Data Source</div>
-              <div className="text-white text-lg font-semibold">db.json</div>
+              <div className="text-gray-900 text-lg font-semibold">db.json</div>
             </div>
           </div>
           {debugInfo && (
             <details className="mt-4">
-              <summary className="text-gray-400 cursor-pointer hover:text-white transition-colors">
+              <summary className="text-gray-600 cursor-pointer hover:text-gray-900 transition-colors">
                 Debug Information
               </summary>
-              <pre className="text-xs text-gray-300 bg-black/30 p-3 rounded mt-2 overflow-auto max-h-32">
+              <pre className="text-xs text-gray-700 bg-black/30 p-3 rounded mt-2 overflow-auto max-h-32">
                 {JSON.stringify(debugInfo, null, 2)}
               </pre>
             </details>
@@ -222,8 +222,8 @@ export default function UserManagement() {
           <Card className="glass-effect card-hover shimmer-effect relative overflow-hidden">
             <CardHeader className="text-center">
               <UserPlus className="w-10 h-10 md:w-12 md:h-12 text-emerald-400 mb-4 mx-auto" />
-              <CardTitle className="text-white text-lg md:text-xl">Add User with Biometrics</CardTitle>
-              <CardDescription className="text-gray-300 text-sm md:text-base">
+              <CardTitle className="text-gray-900 text-lg md:text-xl">Add User with Biometrics</CardTitle>
+              <CardDescription className="text-gray-700 text-sm md:text-base">
                 Register users using face and voice capture.
               </CardDescription>
             </CardHeader>
@@ -241,8 +241,8 @@ export default function UserManagement() {
           <Card className="glass-effect card-hover shimmer-effect relative overflow-hidden">
             <CardHeader className="text-center">
               <UserMinus className="w-10 h-10 md:w-12 md:h-12 text-rose-400 mb-4 mx-auto" />
-              <CardTitle className="text-white text-lg md:text-xl">Delete User</CardTitle>
-              <CardDescription className="text-gray-300 text-sm md:text-base">
+              <CardTitle className="text-gray-900 text-lg md:text-xl">Delete User</CardTitle>
+              <CardDescription className="text-gray-700 text-sm md:text-base">
                 Remove users from the biometric system.
               </CardDescription>
             </CardHeader>
@@ -267,18 +267,18 @@ export default function UserManagement() {
               <CardHeader>
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between space-y-2 md:space-y-0">
                   <div>
-                    <CardTitle className="text-white flex items-center text-lg md:text-xl">
+                    <CardTitle className="text-gray-900 flex items-center text-lg md:text-xl">
                       <UserPlus className="w-5 h-5 md:w-6 md:h-6 mr-2 text-emerald-400" />
                       Add User with Live Biometric Capture
                     </CardTitle>
-                    <CardDescription className="text-gray-300 text-sm md:text-base">
+                    <CardDescription className="text-gray-700 text-sm md:text-base">
                       Python script will capture the user's face and voice.
                     </CardDescription>
                   </div>
                   <Button
                     variant="ghost"
                     onClick={() => setCurrentAction(null)}
-                    className="text-gray-400 hover:text-white self-start md:self-auto"
+                    className="text-gray-600 hover:text-gray-900 self-start md:self-auto"
                     disabled={isLoading}
                   >
                     Cancel
@@ -288,7 +288,7 @@ export default function UserManagement() {
               <CardContent className="space-y-4 md:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div>
-                    <Label htmlFor="userName" className="text-white text-sm md:text-base">Full Name</Label>
+                    <Label htmlFor="userName" className="text-gray-900 text-sm md:text-base">Full Name</Label>
                     <Input
                       id="userName"
                       value={userName}
@@ -299,7 +299,7 @@ export default function UserManagement() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="userEmail" className="text-white text-sm md:text-base">Email Address</Label>
+                    <Label htmlFor="userEmail" className="text-gray-900 text-sm md:text-base">Email Address</Label>
                     <Input
                       id="userEmail"
                       type="email"
@@ -316,15 +316,15 @@ export default function UserManagement() {
                   <div className="flex items-center space-x-3 p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
                     <Camera className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" />
                     <div>
-                      <h4 className="text-white font-medium text-sm md:text-base">Camera Required</h4>
-                      <p className="text-gray-400 text-xs md:text-sm">Used for face recognition</p>
+                      <h4 className="text-gray-900 font-medium text-sm md:text-base">Camera Required</h4>
+                      <p className="text-gray-600 text-xs md:text-sm">Used for face recognition</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3 p-3 bg-teal-500/10 rounded-lg border border-teal-500/20">
                     <Mic className="w-5 h-5 md:w-6 md:h-6 text-teal-400" />
                     <div>
-                      <h4 className="text-white font-medium text-sm md:text-base">Microphone Required</h4>
-                      <p className="text-gray-400 text-xs md:text-sm">Used for voice authentication</p>
+                      <h4 className="text-gray-900 font-medium text-sm md:text-base">Microphone Required</h4>
+                      <p className="text-gray-600 text-xs md:text-sm">Used for voice authentication</p>
                     </div>
                   </div>
                 </div>
@@ -359,14 +359,14 @@ export default function UserManagement() {
             <Card className="glass-effect-strong">
               <CardHeader>
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
-                  <CardTitle className="text-white flex items-center text-lg md:text-xl">
+                  <CardTitle className="text-gray-900 flex items-center text-lg md:text-xl">
                     <UserMinus className="w-5 h-5 md:w-6 md:h-6 mr-2 text-rose-400" />
                     Delete Users
                   </CardTitle>
                   <Button
                     variant="ghost"
                     onClick={() => setCurrentAction(null)}
-                    className="text-gray-400 hover:text-white self-start md:self-auto"
+                    className="text-gray-600 hover:text-gray-900 self-start md:self-auto"
                     disabled={isLoading}
                   >
                     Cancel
@@ -377,7 +377,7 @@ export default function UserManagement() {
                 {users.length === 0 ? (
                   <div className="text-center py-8">
                     <Users className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-                    <p className="text-gray-400">No users found in database</p>
+                    <p className="text-gray-600">No users found in database</p>
                   </div>
                 ) : (
                   users.map((user) => (
@@ -389,8 +389,8 @@ export default function UserManagement() {
                           </span>
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-white font-semibold text-sm md:text-base">{user.name}</h4>
-                          <p className="text-gray-400 text-xs md:text-sm">{user.email}</p>
+                          <h4 className="text-gray-900 font-semibold text-sm md:text-base">{user.name}</h4>
+                          <p className="text-gray-600 text-xs md:text-sm">{user.email}</p>
                           <div className="flex flex-wrap items-center gap-2 mt-1">
                             <p className="text-gray-500 text-xs">Added: {user.addedDate}</p>
                             {user.hasFaceData && (
@@ -435,11 +435,11 @@ export default function UserManagement() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           <Card className="glass-effect-strong">
             <CardHeader>
-              <CardTitle className="text-white flex items-center text-lg md:text-xl">
+              <CardTitle className="text-gray-900 flex items-center text-lg md:text-xl">
                 <Users className="w-5 h-5 md:w-6 md:h-6 mr-2 text-emerald-400" />
                 Current Users ({users.length})
               </CardTitle>
-              <CardDescription className="text-gray-300 text-sm md:text-base">
+              <CardDescription className="text-gray-700 text-sm md:text-base">
                 All users enrolled in the biometric system from db.json
               </CardDescription>
             </CardHeader>
@@ -447,7 +447,7 @@ export default function UserManagement() {
               {users.length === 0 ? (
                 <div className="text-center py-8">
                   <Database className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-                  <p className="text-gray-400 mb-2">No users found in database</p>
+                  <p className="text-gray-600 mb-2">No users found in database</p>
                   <p className="text-gray-500 text-sm">Add users to see them listed here</p>
                 </div>
               ) : (
@@ -461,8 +461,8 @@ export default function UserManagement() {
                           </span>
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-white font-medium text-sm md:text-base">{user.name}</h4>
-                          <p className="text-gray-400 text-xs md:text-sm">{user.email}</p>
+                          <h4 className="text-gray-900 font-medium text-sm md:text-base">{user.name}</h4>
+                          <p className="text-gray-600 text-xs md:text-sm">{user.email}</p>
                           <div className="flex flex-wrap items-center gap-2 mt-1">
                             {user.hasFaceData && (
                               <div className="flex items-center space-x-1 bg-emerald-500/20 px-2 py-1 rounded text-xs">

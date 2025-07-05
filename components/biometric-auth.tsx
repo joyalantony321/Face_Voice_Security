@@ -96,7 +96,7 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
         <CardContent className="pt-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">Python Authentication Progress</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Python Authentication Progress</h3>
               <Badge variant={currentStep === 'complete' ? 'default' : 'secondary'}>
                 {{
                   idle: 'Ready',
@@ -107,7 +107,7 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
               </Badge>
             </div>
             <Progress value={progress} className="h-2" />
-            <div className="flex justify-between text-sm text-gray-400">
+            <div className="flex justify-between text-sm text-gray-600">
               <span className={currentStep !== 'idle' ? 'text-green-400' : ''}>Initialize</span>
               <span className={['processing', 'complete'].includes(currentStep) ? 'text-green-400' : ''}>Execute</span>
               <span className={currentStep === 'complete' ? 'text-green-400' : ''}>Complete</span>
@@ -119,11 +119,11 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
       {/* Python Biometric Integration */}
       <Card className="glass-effect">
         <CardHeader>
-          <CardTitle className="text-white flex items-center">
+          <CardTitle className="text-gray-900 flex items-center">
             <Terminal className="w-6 h-6 mr-2 text-cyan-400" />
             Python Biometric Authentication
           </CardTitle>
-          <CardDescription className="text-gray-300">
+          <CardDescription className="text-gray-700">
             Authenticate using live face and voice recognition
           </CardDescription>
         </CardHeader>
@@ -131,19 +131,19 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
         <CardContent className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-white font-semibold flex items-center">
+              <h4 className="text-gray-900 font-semibold flex items-center">
                 <Camera className="w-5 h-5 mr-2 text-blue-400" /> Camera Requirements
               </h4>
-              <ul className="text-gray-300 text-sm list-disc ml-5 mt-1">
+              <ul className="text-gray-700 text-sm list-disc ml-5 mt-1">
                 <li>Good lighting</li>
                 <li>Clear face view</li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold flex items-center">
+              <h4 className="text-gray-900 font-semibold flex items-center">
                 <Mic className="w-5 h-5 mr-2 text-purple-400" /> Microphone Requirements
               </h4>
-              <ul className="text-gray-300 text-sm list-disc ml-5 mt-1">
+              <ul className="text-gray-700 text-sm list-disc ml-5 mt-1">
                 <li>Low background noise</li>
                 <li>Clear 4-second voice sample</li>
               </ul>
@@ -153,18 +153,18 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
           <div className="grid md:grid-cols-3 gap-4">
             <div className={`p-3 rounded-lg border ${currentStep === 'python' ? 'border-blue-400 bg-blue-400/10' : 'border-gray-600'}`}>
               <Eye className="w-6 h-6 text-blue-400 mb-2" />
-              <h5 className="text-white font-medium">Face Recognition</h5>
-              <p className="text-gray-400 text-xs">Live webcam analysis</p>
+              <h5 className="text-gray-900 font-medium">Face Recognition</h5>
+              <p className="text-gray-600 text-xs">Live webcam analysis</p>
             </div>
             <div className={`p-3 rounded-lg border ${currentStep === 'python' ? 'border-purple-400 bg-purple-400/10' : 'border-gray-600'}`}>
               <Mic className="w-6 h-6 text-purple-400 mb-2" />
-              <h5 className="text-white font-medium">Voice Authentication</h5>
-              <p className="text-gray-400 text-xs">Microphone recording</p>
+              <h5 className="text-gray-900 font-medium">Voice Authentication</h5>
+              <p className="text-gray-600 text-xs">Microphone recording</p>
             </div>
             <div className={`p-3 rounded-lg border ${['processing', 'complete'].includes(currentStep) ? 'border-green-400 bg-green-400/10' : 'border-gray-600'}`}>
               <CheckCircle className="w-6 h-6 text-green-400 mb-2" />
-              <h5 className="text-white font-medium">Verification</h5>
-              <p className="text-gray-400 text-xs">Pattern matching</p>
+              <h5 className="text-gray-900 font-medium">Verification</h5>
+              <p className="text-gray-600 text-xs">Pattern matching</p>
             </div>
           </div>
 
@@ -194,7 +194,7 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
                 exit={{ opacity: 0, y: -20 }}
                 className="text-center"
               >
-                <div className="flex items-center justify-center space-x-3 text-white mb-4">
+                <div className="flex items-center justify-center space-x-3 text-gray-900 mb-4">
                   <Loader2 className="w-6 h-6 animate-spin" />
                   <span className="text-lg">
                     {currentStep === 'python'
@@ -202,7 +202,7 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
                       : 'Processing biometric data...'}
                   </span>
                 </div>
-                <p className="text-gray-400">
+                <p className="text-gray-600">
                   {currentStep === 'python'
                     ? 'Follow Python prompts (face, then voice)'
                     : 'Matching face and voice data...'}
@@ -215,7 +215,7 @@ export default function BiometricAuth({ onAuthComplete }: BiometricAuthProps) {
             <Button
               onClick={resetAuth}
               variant="outline"
-              className="w-full border-white/20 hover:bg-white/10 text-white"
+              className="w-full border-white/20 hover:bg-white/10 text-gray-900"
               disabled={isRunning}
             >
               Cancel Authentication
