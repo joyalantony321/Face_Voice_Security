@@ -294,7 +294,7 @@ export default function UserManagement() {
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                       placeholder="Enter full name"
-                      className="bg-white/10 border-white/20 text-white mt-1"
+                      className="bg-white/10 border-white/20 text-black mt-1"
                       disabled={isLoading}
                     />
                   </div>
@@ -306,7 +306,7 @@ export default function UserManagement() {
                       value={userEmail}
                       onChange={(e) => setUserEmail(e.target.value)}
                       placeholder="Enter email"
-                      className="bg-white/10 border-white/20 text-white mt-1"
+                      className="bg-white/10 border-white/20 text-black mt-1"
                       disabled={isLoading}
                     />
                   </div>
