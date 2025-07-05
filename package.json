@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start:backend": "cd ../backend/audio_video_auth_system && uvicorn main:app --reload",
+    "start:frontend": "next dev",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -69,5 +72,8 @@
     "typescript": "5.2.2",
     "vaul": "^0.9.9",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
   }
 }
