@@ -37,6 +37,7 @@ export default function UserManagement() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [debugInfo, setDebugInfo] = useState<any>(null);
   const [users, setUsers] = useState<User[]>([]);
+  const [capturePhase, setCapturePhase] = useState<'idle' | 'photo' | 'voice' | 'complete'>('idle');
 
   // Fetch users from db.json on component mount
   useEffect(() => {
@@ -85,10 +86,18 @@ export default function UserManagement() {
 
     setIsLoading(true);
     setDebugInfo(null);
+    setCapturePhase('photo'); // Start with photo capture
 
     try {
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
       const workspaceCode = userData.workspaceCode || 'default';
+
+      // Simulate photo capture phase (3 seconds)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setCapturePhase('voice'); // Move to voice capture
+
+      // Simulate voice capture phase (4 seconds)
+      await new Promise(resolve => setTimeout(resolve, 4000));
 
       const response = await fetch(`${API_BASE}/api/python/add-user`, {
         method: 'POST',
@@ -104,6 +113,7 @@ export default function UserManagement() {
       setDebugInfo(result.debug || result);
 
       if (result.success) {
+        setCapturePhase('complete');
         const newUser: User = {
           id: Date.now().toString(),
           name: userName,
@@ -114,17 +124,25 @@ export default function UserManagement() {
         setUsers(prev => [...prev, newUser]);
         setUserName('');
         setUserEmail('');
-        setCurrentAction(null);
+
+        // Show complete state for 2 seconds before resetting
+        setTimeout(() => {
+          setCapturePhase('idle');
+          setCurrentAction(null);
+        }, 2000);
+
         toast.success(`User ${userName} added successfully with biometric data!`);
         // Refresh users list to get updated data from db.json
         setTimeout(() => fetchUsers(), 2000);
       } else {
+        setCapturePhase('idle');
         toast.error(result.message || 'Failed to add user');
       }
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error occurred';
       toast.error('Failed to connect to backend: ' + message);
       setDebugInfo({ error: message, type: 'network_error' });
+      setCapturePhase('idle');
     } finally {
       setIsLoading(false);
     }
@@ -277,7 +295,10 @@ export default function UserManagement() {
                   </div>
                   <Button
                     variant="ghost"
-                    onClick={() => setCurrentAction(null)}
+                    onClick={() => {
+                      setCurrentAction(null);
+                      setCapturePhase('idle');
+                    }}
                     className="text-gray-600 hover:text-gray-900 self-start md:self-auto"
                     disabled={isLoading}
                   >
@@ -329,6 +350,61 @@ export default function UserManagement() {
                   </div>
                 </div>
 
+                {/* Capture Phase Indicators */}
+                {capturePhase !== 'idle' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
+                    <div className={`flex items-center space-x-3 p-3 rounded-lg border transition-all ${
+                      capturePhase === 'photo'
+                        ? 'border-blue-400 bg-blue-400/20 animate-pulse'
+                        : capturePhase === 'voice' || capturePhase === 'complete'
+                        ? 'border-green-400 bg-green-400/10'
+                        : 'border-gray-300 bg-gray-100'
+                    }`}>
+                      <Camera className={`w-5 h-5 md:w-6 md:h-6 ${
+                        capturePhase === 'photo'
+                          ? 'text-blue-400'
+                          : capturePhase === 'voice' || capturePhase === 'complete'
+                          ? 'text-green-400'
+                          : 'text-gray-400'
+                      }`} />
+                      <div>
+                        <h4 className="text-gray-900 font-medium text-sm md:text-base">
+                          {capturePhase === 'photo' ? 'Capturing Photo...' :
+                           capturePhase === 'voice' || capturePhase === 'complete' ? 'Photo Captured ✓' : 'Photo Capture'}
+                        </h4>
+                        <p className="text-gray-600 text-xs md:text-sm">
+                          {capturePhase === 'photo' ? 'Look at camera' : 'Face recognition complete'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={`flex items-center space-x-3 p-3 rounded-lg border transition-all ${
+                      capturePhase === 'voice'
+                        ? 'border-purple-400 bg-purple-400/20 animate-pulse'
+                        : capturePhase === 'complete'
+                        ? 'border-green-400 bg-green-400/10'
+                        : 'border-gray-300 bg-gray-100'
+                    }`}>
+                      <Mic className={`w-5 h-5 md:w-6 md:h-6 ${
+                        capturePhase === 'voice'
+                          ? 'text-purple-400'
+                          : capturePhase === 'complete'
+                          ? 'text-green-400'
+                          : 'text-gray-400'
+                      }`} />
+                      <div>
+                        <h4 className="text-gray-900 font-medium text-sm md:text-base">
+                          {capturePhase === 'voice' ? 'Capturing Voice...' :
+                           capturePhase === 'complete' ? 'Voice Captured ✓' : 'Voice Capture'}
+                        </h4>
+                        <p className="text-gray-600 text-xs md:text-sm">
+                          {capturePhase === 'voice' ? 'Speak clearly' :
+                           capturePhase === 'complete' ? 'Voice recognition complete' : 'Waiting for photo'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <Button
                   onClick={handleAddUser}
                   disabled={isLoading || !userName.trim() || !userEmail.trim()}
@@ -337,7 +413,11 @@ export default function UserManagement() {
                   {isLoading ? (
                     <div className="flex items-center space-x-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Registering...</span>
+                      <span>
+                        {capturePhase === 'photo' ? 'Capturing Photo...' :
+                         capturePhase === 'voice' ? 'Capturing Voice...' :
+                         capturePhase === 'complete' ? 'Processing...' : 'Registering...'}
+                      </span>
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
